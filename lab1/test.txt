@@ -7,3 +7,6 @@
 2 a 4, not a triangle
 a a a, not a triangle
 a, not a triangle
+0 0 0, not a triangle
+-1 2 4, not a triangle
+8.9 34 7.9, normal

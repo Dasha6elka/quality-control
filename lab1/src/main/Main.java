@@ -3,23 +3,25 @@ package main;
 public class Main {
     public static void main(String[] args) {
         try {
-            int a;
-            int b;
-            int c;
+            double a;
+            double b;
+            double c;
             if (args.length != 3) {
                 System.out.println("not a triangle");
                 return;
             }
-            String regex = "\\d+";
+            String regex = "^([+-]?\\d*\\.?\\d*)$";
             if (args[0].matches(regex) && args[1].matches(regex) && args[2].matches(regex)) {
-                a = Integer.parseInt(args[0]);
-                b = Integer.parseInt(args[1]);
-                c = Integer.parseInt(args[2]);
+                a = Double.parseDouble(args[0]);
+                b = Double.parseDouble(args[1]);
+                c = Double.parseDouble(args[2]);
             } else {
                 System.out.println("not a triangle");
                 return;
             }
-            if (a == b && a == c) {
+            if (a < 1 || b < 1 || c < 1) {
+                System.out.println("not a triangle");
+            } else if (a == b && a == c) {
                 System.out.println("equilateral");
             } else if (a == b || b == c || c == a) {
                 System.out.println("isosceles");
@@ -28,8 +30,6 @@ public class Main {
             }
         } catch (Exception e) {
             System.out.println("unknown error");
-
         }
-
     }
 }
