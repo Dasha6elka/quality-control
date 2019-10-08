@@ -1,23 +1,36 @@
 package main;
 
+import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.net.HttpURLConnection;
+import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLConnection;
+import java.net.http.HttpResponse;
+import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class Main {
+    private static int oks = 0;
+    private static int errors = 0;
     private static final String URL = "http://52.136.215.164";
     private static final Set<String> urls = new HashSet<>();
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws IOException {
         getContentPage(URL + "/broken-links/");
+
+        System.out.printf("%n%d%n%s%n", oks, new Date().toString());
+        System.err.printf("%n%d%n%s%n", errors, new Date().toString());
     }
 
-    private static void getContentPage(String url) {
+    private static void getContentPage(String url) throws IOException {
+        HttpURLConnection http = (HttpURLConnection) new URL(url).openConnection();
+        int statusCode = http.getResponseCode();
+
         try {
             StringBuilder sb = new StringBuilder();
             URLConnection connection = new URL(url).openConnection();
@@ -32,15 +45,19 @@ public class Main {
 
             reader.close();
 
-            System.out.printf("%s %b%n", url, true);
+            oks++;
+
+            System.out.printf("%s %d%n", url, statusCode);
 
             getLinks(sb.toString());
         } catch (Exception e) {
-            System.out.printf("%s %b%n", url, false);
+            errors++;
+
+            System.err.printf("%s %d%n", url, statusCode);
         }
     }
 
-    private static void getLinks(String content) {
+    private static void getLinks(String content) throws IOException {
         Pattern pattern = Pattern.compile("<a.*href=\"(.*?)\".*>");
         Matcher matcher = pattern.matcher(content);
 
