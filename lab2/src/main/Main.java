@@ -5,7 +5,6 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
-import java.net.URLConnection;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
@@ -26,14 +25,19 @@ public class Main {
     }
 
     private static void getContentPage(String url) throws IOException {
+        StringBuilder sb = new StringBuilder();
         HttpURLConnection http = (HttpURLConnection) new URL(url).openConnection();
         int statusCode = http.getResponseCode();
 
-        try {
-            StringBuilder sb = new StringBuilder();
-            URLConnection connection = new URL(url).openConnection();
+        if (statusCode > 301) {
+            errors++;
 
-            InputStream is = connection.getInputStream();
+            System.err.printf("%s %d%n", url, statusCode);
+            return;
+        }
+
+        try {
+            InputStream is = http.getInputStream();
             InputStreamReader reader = new InputStreamReader(is);
             char[] buffer = new char[256];
             int rc;
