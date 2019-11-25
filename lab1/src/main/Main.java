@@ -1,35 +1,44 @@
-package main;
+package lab1.src.main;
 
 public class Main {
     public static void main(String[] args) {
         try {
-            double a;
-            double b;
-            double c;
-            if (args.length != 3) {
-                System.out.println("not a triangle");
-                return;
-            }
-            String regex = "^([+-]?\\d*\\.?\\d*)$";
-            if (args[0].matches(regex) && args[1].matches(regex) && args[2].matches(regex)) {
-                a = Double.parseDouble(args[0]);
-                b = Double.parseDouble(args[1]);
-                c = Double.parseDouble(args[2]);
-            } else {
-                System.out.println("not a triangle");
-                return;
-            }
-            if (a < 1 || b < 1 || c < 1) {
-                System.out.println("not a triangle");
-            } else if (a == b && a == c) {
-                System.out.println("equilateral");
-            } else if (a == b || b == c || c == a) {
-                System.out.println("isosceles");
-            } else {
-                System.out.println("normal");
-            }
+            Triangle triangle = new Triangle();
+            parseArgs(args, triangle);
+            triangle.setTypeTriangle();
+            printTriangleInformation(triangle);
         } catch (Exception e) {
             System.out.println("unknown error");
         }
     }
+
+    public static void parseArgs(String[] args, Triangle triangle) {
+        if (args.length != 3) {
+            triangle.setTypeTriangle(ETypeTriangle.NOTRIANGLE);
+            return;
+        }
+        String regex = "^([+-]?\\d*\\.?\\d*)$";
+        if (args[0].matches(regex) && args[1].matches(regex) && args[2].matches(regex)) {
+            triangle.setA(Double.parseDouble(args[0]));
+            triangle.setB(Double.parseDouble(args[1]));
+            triangle.setC(Double.parseDouble(args[2]));
+        } else {
+            triangle.setTypeTriangle(ETypeTriangle.NOTRIANGLE);
+        }
+    }
+
+    private static void printTriangleInformation(Triangle triangle) {
+        if (triangle.getTypeTriangle().equals(ETypeTriangle.NOTRIANGLE)) {
+            System.out.println("not a triangle");
+        } else if (triangle.getTypeTriangle().equals(ETypeTriangle.EQUILATERAL)) {
+            System.out.println("equilateral");
+        } else if (triangle.getTypeTriangle().equals(ETypeTriangle.ISOSCELES)) {
+            System.out.println("isosceles");
+        } else if (triangle.getTypeTriangle().equals(ETypeTriangle.NORMAL)) {
+            System.out.println("normal");
+        }
+        System.out.println("Периметр треугольника: " + triangle.getPerimeter());
+        System.out.println("Площадь треугольника: " + triangle.getArea());
+    }
 }
+
