@@ -12,7 +12,7 @@ public class Main {
         }
     }
 
-    public static void parseArgs(String[] args, Triangle triangle) {
+    static void parseArgs(String[] args, Triangle triangle) {
         if (args.length != 3) {
             triangle.setTypeTriangle(ETypeTriangle.NOTRIANGLE);
             return;

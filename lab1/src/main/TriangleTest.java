@@ -7,28 +7,29 @@ import static org.junit.jupiter.api.Assertions.*;
 class TriangleTest {
 
     @Test
-    void getA() {
+    void getA_returnsNumber() {
         Triangle triangle = new Triangle();
         triangle.setA(2);
-        assertEquals(2, triangle.getA());
+        assertEquals(2, triangle.getA(),
+                "Функция должна вернуть длину стороны треугольника");
     }
 
     @Test
-    void setB() {
+    void setB_number() {
         Triangle triangle = new Triangle();
         triangle.setB(2);
         assertEquals(2, triangle.getB());
     }
 
     @Test
-    void getC() {
+    void getC_returnsNumber() {
         Triangle triangle = new Triangle();
         triangle.setC(2);
         assertEquals(2, triangle.getC());
     }
 
     @Test
-    void getPerimeter() {
+    void getPerimeter_returnsNumber() {
         Triangle triangle = new Triangle();
         triangle.setA(2);
         triangle.setB(2);
@@ -37,7 +38,7 @@ class TriangleTest {
     }
 
     @Test
-    void getArea() {
+    void getArea_returnsNumber() {
         Triangle triangle = new Triangle();
         triangle.setA(3);
         triangle.setB(4);
@@ -46,35 +47,35 @@ class TriangleTest {
     }
 
     @Test
-    void setEquilateralTypeTriangle() {
+    void setTypeTriangle_returnsEquilateralType() {
         Triangle triangle = new Triangle();
         triangle.setTypeTriangle(ETypeTriangle.EQUILATERAL);
         assertEquals(ETypeTriangle.EQUILATERAL, triangle.getTypeTriangle());
     }
 
     @Test
-    void getIsoscelesTypeTriangle() {
+    void getTypeTriangle_returnsIsoscelesType() {
         Triangle triangle = new Triangle();
         triangle.setTypeTriangle(ETypeTriangle.ISOSCELES);
         assertEquals(ETypeTriangle.ISOSCELES, triangle.getTypeTriangle());
     }
 
     @Test
-    void getNormalTypeTriangle() {
+    void getTypeTriangle_returnsNormalType() {
         Triangle triangle = new Triangle();
         triangle.setTypeTriangle(ETypeTriangle.NORMAL);
         assertEquals(ETypeTriangle.NORMAL, triangle.getTypeTriangle());
     }
 
     @Test
-    void getNoTriangleType() {
+    void getTypeTriangle_returnsNoTriangleType() {
         Triangle triangle = new Triangle();
         triangle.setTypeTriangle(ETypeTriangle.NOTRIANGLE);
         assertEquals(ETypeTriangle.NOTRIANGLE, triangle.getTypeTriangle());
     }
 
     @Test
-    void setEquilateralTypeTriangleOnSide() {
+    void setTypeTriangle_equilateralTriangle() {
         Triangle triangle = new Triangle();
         triangle.setA(2);
         triangle.setB(2);
@@ -84,7 +85,7 @@ class TriangleTest {
     }
 
     @Test
-    void setIsoscelesTypeTriangleOnSide() {
+    void setTypeTriangle_isoscelesTriangle() {
         Triangle triangle = new Triangle();
         triangle.setA(2);
         triangle.setB(2);
@@ -94,7 +95,7 @@ class TriangleTest {
     }
 
     @Test
-    void setNormalTypeTriangleOnSide() {
+    void setTypeTriangle_normalTriangle() {
         Triangle triangle = new Triangle();
         triangle.setA(2);
         triangle.setB(3);
@@ -104,12 +105,43 @@ class TriangleTest {
     }
 
     @Test
-    void setNoTriangleTypeOnSide() {
+    void setTypeTriangle_noTriangle() {
         Triangle triangle = new Triangle();
         triangle.setA(2);
         triangle.setB(2);
         triangle.setC(0);
         triangle.setTypeTriangle();
+        assertEquals(ETypeTriangle.NOTRIANGLE, triangle.getTypeTriangle());
+    }
+
+    @Test
+    void setTriangle_empty_returnsNoTriangle() {
+        Triangle triangle = new Triangle();
+        assertEquals(ETypeTriangle.NOTRIANGLE, triangle.getTypeTriangle());
+    }
+
+    @Test
+    void setA_doubleNumber() {
+        Triangle triangle = new Triangle();
+        triangle.setA(34.78);
+        assertEquals(34.78, triangle.getA());
+    }
+
+    @Test
+    void setNullNumber_null_returnsNoTriangle() {
+        Triangle triangle = new Triangle();
+        triangle.setA(0);
+        triangle.setA(0);
+        triangle.setA(0);
+        assertEquals(ETypeTriangle.NOTRIANGLE, triangle.getTypeTriangle());
+    }
+
+    @Test
+    void setNegativeNumber_negativeNumber_returnsNoTriangle() {
+        Triangle triangle = new Triangle();
+        triangle.setA(-4);
+        triangle.setA(-1);
+        triangle.setA(-487);
         assertEquals(ETypeTriangle.NOTRIANGLE, triangle.getTypeTriangle());
     }
 }
